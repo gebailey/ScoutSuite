@@ -180,6 +180,7 @@ class EC2Facade(AWSBaseFacade):
         subnet['flow_logs'] = \
             [flow_log for flow_log in self.flow_logs_cache[region]
              if flow_log['ResourceId'] == subnet['SubnetId'] or flow_log['ResourceId'] == subnet['VpcId']]
+        subnet['flow_log_types'] = list({flow_log['LogDestinationType'] for flow_log in subnet['flow_logs']})
 
     async def get_peering_connections(self, region):
         try:
